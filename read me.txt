@@ -1,0 +1,119 @@
+Development and Deployment of Brain Tumor Detection from MRI Images
+
+Introduction
+This project showcases the development and deployment of an advanced AI application designed to detect brain tumors from MRI images. By leveraging state-of-the-art deep learning techniques and a user-friendly interface, this solution aims to aid medical professionals in early diagnosis and improve healthcare outcomes.
+
+Table of Contents
+Project Overview
+Technologies and Libraries Used
+Dataset
+Installation and Setup
+Model Training
+Deployment
+Usage
+Results and Visualization
+Contributing
+License
+
+Project Overview
+The primary objective of this project is to build and deploy a deep learning model capable of detecting brain tumors from MRI images. The application is designed to be scalable and accessible, providing real-time predictions with a high degree of accuracy.
+
+Technologies and Libraries Used
+TensorFlow & Keras: For building and training the deep learning model.
+NumPy: For efficient numerical operations and data manipulation.
+scikit-learn: For data preprocessing and splitting.
+Pillow: For image processing.
+Matplotlib: For visualizing training and validation performance.
+Streamlit: For creating an interactive web application.
+AWS Elastic Beanstalk: For deploying the AI solution.
+
+Dataset
+The dataset consists of MRI images categorized into two folders:
+
+yes: Images with brain tumors.
+no: Images without brain tumors.
+The dataset: https://www.kaggle.com/datasets/navoneel/brain-mri-images-for-brain-tumor-detection/data
+
+Installation and Setup
+Prerequisites
+Python 3.7+
+AWS CLI
+AWS Elastic Beanstalk CLI
+Steps
+
+Clone the Repository
+
+cd brain-tumor-detection
+
+Set Up a Virtual Environment
+
+python -m venv venv
+source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
+
+Install the Dependencies
+pip install -r requirements.txt
+
+Model Training
+To train the model, run the train_model.py script. This script will load the dataset, preprocess the data, train the model, and save the trained model.
+python train_model.py
+
+Visualizing Training Results
+The training script also generates plots for training and validation accuracy and loss, saved as training_history.png.
+
+Deployment
+AWS Elastic Beanstalk
+
+Initialize Elastic Beanstalk
+eb init -p python-3.7 brain-tumor-detection
+
+Create an Elastic Beanstalk Environment
+eb create brain-tumor-env
+
+Deploy the Application
+eb deploy
+Open the Application
+
+eb open
+Files for Deployment
+Procfile: Specifies the command to run the application.
+
+web: sh setup.sh && streamlit run app.py --server.port $PORT
+
+setup.sh: Installs necessary dependencies.
+#!/bin/bash
+pip install --upgrade pip
+pip install -r requirements.txt
+
+requirements.txt: Lists all Python dependencies.
+
+txt
+Copy code
+streamlit
+tensorflow
+pillow
+numpy
+.ebextensions/python.config: Configures the Python environment for Elastic Beanstalk.
+
+yaml
+option_settings:
+  aws:elasticbeanstalk:container:python:
+    WSGIPath: app.py
+
+Usage
+Run the Application Locally
+streamlit run app.py
+
+Upload an MRI Image: Use the web interface to upload an MRI image for classification.
+
+View Predictions: The application will display whether the uploaded image contains a brain tumor along with the confidence level.
+
+Results and Visualization
+The model's performance during training is visualized through plots of accuracy and loss. These plots help in understanding the model's learning progress and are saved as training_history.png.
+
+Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+
